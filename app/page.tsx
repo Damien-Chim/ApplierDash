@@ -1,5 +1,7 @@
 "use client";
+import ApplicationCard from "@/components/ApplicationCard";
 import { useState } from "react";
+
 export default function Home() {
   // using useState hook to track the state of the modal card (shown/not shown)
   // Initial value of showModal = false
@@ -39,6 +41,43 @@ export default function Home() {
           </div>
         )
       }
+      <div style={cardContainerStyle}>
+        <ApplicationCard
+          company={"Google"}
+          role={"SWE Intern"}
+          status={"Pending"}
+          date={"01/06"}
+        />
+
+        <ApplicationCard
+          company={"Microsoft"}
+          role={"Graduate Offer"}
+          status={"Interview"}
+          date={"24/05"}
+        />
+
+        <ApplicationCard
+          company={"TikTok"}
+          role={"Test Intern"}
+          status={"Rejected"}
+          date={"05/06"}
+        />
+
+        <ApplicationCard
+          company={"TikTok"}
+          role={"Test Intern"}
+          status={"Rejected"}
+          date={"05/06"}
+        />
+
+        <ApplicationCard
+          company={"TikTok"}
+          role={"Test Intern"}
+          status={"Rejected"}
+          date={"05/06"}
+        />
+
+      </div>
     </div>
   );
 }
@@ -84,3 +123,11 @@ const inputStyle: React.CSSProperties = {
   borderRadius: "6px",
   border: "1px solid #ccc",
 };
+
+const cardContainerStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+  height: "400px",
+  width: "100%",
+  overflowX: "auto"
+}

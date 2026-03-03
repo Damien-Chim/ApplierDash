@@ -1,0 +1,53 @@
+.card {
+    border-radius: 15px;
+
+    /* box-shodow gives the effect that the card is sitting on the screen */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    margin: 20px;
+
+    width: 300px;
+    /* height is not needed, because the card will take up the height of the container it is in */
+    /* just a behaviour of flex */
+
+    /* Padding is for the space INSIDE the card between the border and the content */
+    padding: 20px;
+
+    /* display set to flex so that it is easier to align the items inside the card */
+    display: flex;
+
+    /* flex-direction is row (horizontal) by default, setting to vertical */
+    /* makes the elements within stack above each other */
+    flex-direction: column;
+
+    /* justify-content: flex-start; */
+
+    /* If size of all flex items is larger than the flex container */
+    /* The flex items can shrink accordingly to their flex-srhink value */
+    /* if not specified, the flex items will shrink as much as possible to fit into the flex box */
+    /* set flex-shrink to 0 so that the items do not shrink */
+    flex-shrink: 0;
+
+    /* space between text elements */
+    gap: 10px;
+
+    /* Font */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.card p:last-child {
+    font-size: 0.85rem;
+    color: #999;
+}
