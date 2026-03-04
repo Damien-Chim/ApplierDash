@@ -1,6 +1,7 @@
 'use-client'
 import React from "react";
-
+import SuccessNotification from "./SuccessNotification";
+import { useState } from "react";
 type ModalProps = {
     isOpen: boolean
 
@@ -10,9 +11,13 @@ type ModalProps = {
     // void (nothing)
     closeModal: () => void
 }
+
+
 export default function Modal({
     isOpen, closeModal
 }: ModalProps) {
+
+    const [showSuccessNotification, setShowSuccessNotification] = useState(false);
     // return nothing, i.e.: modal will not open if isOpen is false
     if (!isOpen) { return null; }
 
@@ -29,7 +34,16 @@ export default function Modal({
                 <input placeholder="Role" style={inputStyle} />
                 <textarea placeholder="Notes" style={inputStyle} />
 
-                <button>Save</button>
+                {showSuccessNotification && <SuccessNotification />}
+
+                <button onClick={() => {
+                    setShowSuccessNotification(true);
+                    setTimeout(() => {
+                        closeModal();
+                        setShowSuccessNotification(false);
+
+                    }, 1000)
+                }}>Save</button>
                 <button onClick={closeModal}>Cancel</button>
 
             </div>
@@ -37,6 +51,12 @@ export default function Modal({
     )
 }
 
+// closeModal (without parentheses) is just a pointer to the actual function that closes the modal
+// React will call the function pointed to by the closeModal pointer immediately when button is pressed
+
+// closeModal() (with parentheses) is the actual function call
+// wrapping it in () => {...} delays the function call until the button is actually pressed
+// necessary for multiple actions
 
 const overlayStyle: React.CSSProperties = {
     // the top and left properties are used to precisely position an element
