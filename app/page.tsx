@@ -21,7 +21,7 @@ export default function Home() {
       {/* and that function should be something that sets setShowModal to false */}
       <Modal isOpen={showModal} closeModal={() => setShowModal(false)} />
 
-      <div style={cardContainerStyle}>
+      <div className="flex h-100 w-full overflow-x-auto">
         <ApplicationCard
           company={"Google"}
           role={"SWE Intern"}
@@ -60,12 +60,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
-
-const cardContainerStyle: React.CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  height: "400px",
-  width: "100%",
-  overflowX: "auto"
 }
