@@ -2,7 +2,7 @@
 import ApplicationCard from "@/components/ApplicationCard";
 import Modal from "@/components/Modal";
 import { useState } from "react";
-
+import { Button } from "@mui/material";
 export default function Home() {
   // using useState hook to track the state of the modal card (shown/not shown)
   // Initial value of showModal = false
@@ -15,8 +15,8 @@ export default function Home() {
         // create an add internship button, when it is pressed
         // it will trigger the useState hook to set the show modal to true
       }
-      <button onClick={() => setShowModal(true)}>Add Internship</button>
 
+      <Button variant="contained" onClick={() => setShowModal(true)}>Add Internship</Button>
       {/* Recall that closeModal will take a function */}
       {/* and that function should be something that sets setShowModal to false */}
       <Modal isOpen={showModal} closeModal={() => setShowModal(false)} />
