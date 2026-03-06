@@ -3,6 +3,7 @@ import React from "react";
 import SuccessNotification from "./SuccessNotification";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import './Modal.css';
 
 type ModalProps = {
     isOpen: boolean
@@ -26,7 +27,6 @@ export default function Modal({
         const role = formData.get("role");
         const notes = formData.get("notes");
 
-        console.log("F");
         setShowSuccessNotification(true)
         closeModal()
 
@@ -46,15 +46,17 @@ export default function Modal({
             <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
                 <h2>Add Internship</h2>
                 <form action={handleSubmit}>
-                    <input name="companyName" placeholder="Company Name" style={inputStyle} />
-                    <input name="location" placeholder="Location" style={inputStyle} />
-                    <input name="role" placeholder="Role" style={inputStyle} />
-                    <textarea name="notes" placeholder="Notes" style={inputStyle} />
 
+                    <input className="w-full mb-3" name="companyName" placeholder="Company Name" style={inputStyle} />
 
+                    <input className="w-full mb-3" name="location" placeholder="Location" style={inputStyle} />
 
-                    <Button type="submit" variant="contained" color="success">Save</Button>
-                    <Button variant="contained" color="error" onClick={closeModal}>Cancel</Button>
+                    <input className="w-full mb-3" name="role" placeholder="Role" style={inputStyle} />
+
+                    <textarea className="w-full mb-3" name="notes" placeholder="Notes" style={inputStyle} />
+
+                    <Button className="mui-button" type="submit" variant="contained" color="success">Save</Button>
+                    <Button className="mui-button" variant="contained" color="error" onClick={closeModal}>Cancel</Button>
                 </form>
             </div>
         </div>
