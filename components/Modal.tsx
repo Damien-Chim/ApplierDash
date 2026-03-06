@@ -19,6 +19,22 @@ type ModalProps = {
 export default function Modal({
     isOpen, closeModal, setShowSuccessNotification
 }: ModalProps) {
+
+    function handleSubmit(formData: FormData) {
+        const companyName = formData.get("companyName");
+        const location = formData.get("location");
+        const role = formData.get("role");
+        const notes = formData.get("notes");
+
+        console.log("F");
+        setShowSuccessNotification(true)
+        closeModal()
+
+        setTimeout(() => {
+            setShowSuccessNotification(false)
+        }, 2000)
+
+    }
     // return nothing, i.e.: modal will not open if isOpen is false
     if (!isOpen) { return null; }
 
@@ -29,25 +45,17 @@ export default function Modal({
             {/* {e.stopPropagation prevents the modal from closing when clicking inside} */}
             <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
                 <h2>Add Internship</h2>
+                <form action={handleSubmit}>
+                    <input name="companyName" placeholder="Company Name" style={inputStyle} />
+                    <input name="location" placeholder="Location" style={inputStyle} />
+                    <input name="role" placeholder="Role" style={inputStyle} />
+                    <textarea name="notes" placeholder="Notes" style={inputStyle} />
 
-                <input placeholder="Company Name" style={inputStyle} />
-                <input placeholder="Location" style={inputStyle} />
-                <input placeholder="Role" style={inputStyle} />
-                <textarea placeholder="Notes" style={inputStyle} />
 
 
-
-                <Button variant="contained" color="success" onClick={() => {
-                    setShowSuccessNotification(true)
-                    closeModal()
-
-                    setTimeout(() => {
-                        setShowSuccessNotification(false)
-                    }, 2000)
-
-                }}>Save</Button>
-                <Button variant="contained" color="error" onClick={closeModal}>Cancel</Button>
-
+                    <Button type="submit" variant="contained" color="success">Save</Button>
+                    <Button variant="contained" color="error" onClick={closeModal}>Cancel</Button>
+                </form>
             </div>
         </div>
     )
