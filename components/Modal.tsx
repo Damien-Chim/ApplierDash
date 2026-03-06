@@ -10,13 +10,12 @@ type ModalProps = {
     // => returns
     // void (nothing)
     closeModal: () => void
-    setShowSuccessNotification: () => void
-    closeSuccessNotification: () => void
+    setShowSuccessNotification: (value: boolean) => void
 }
 
 
 export default function Modal({
-    isOpen, closeModal, setShowSuccessNotification, closeSuccessNotification
+    isOpen, closeModal, setShowSuccessNotification
 }: ModalProps) {
     // return nothing, i.e.: modal will not open if isOpen is false
     if (!isOpen) { return null; }
@@ -37,11 +36,11 @@ export default function Modal({
 
 
                 <button onClick={() => {
-                    setShowSuccessNotification()
+                    setShowSuccessNotification(true)
                     closeModal()
 
                     setTimeout(() => {
-                        closeSuccessNotification()
+                        setShowSuccessNotification(false)
                     }, 2000)
 
                 }}>Save</button>

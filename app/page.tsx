@@ -21,7 +21,7 @@ export default function Home() {
       <Button variant="contained" onClick={() => setShowModal(true)}>Add Internship</Button>
       {/* Recall that closeModal will take a function */}
       {/* and that function should be something that sets setShowModal to false */}
-      <Modal isOpen={showModal} closeModal={() => setShowModal(false)} setShowSuccessNotification={() => setShowSuccessNotification(true)} closeSuccessNotification={() => setShowSuccessNotification(false)} />
+      <Modal isOpen={showModal} closeModal={() => setShowModal(false)} setShowSuccessNotification={setShowSuccessNotification} />
       <SuccessNotification isShown={showSuccessNotification} />
       <div className="flex h-100 w-full overflow-x-auto">
         <ApplicationCard
