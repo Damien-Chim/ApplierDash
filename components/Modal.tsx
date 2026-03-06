@@ -10,14 +10,14 @@ type ModalProps = {
     // => returns
     // void (nothing)
     closeModal: () => void
+    setShowSuccessNotification: () => void
+    closeSuccessNotification: () => void
 }
 
 
 export default function Modal({
-    isOpen, closeModal
+    isOpen, closeModal, setShowSuccessNotification, closeSuccessNotification
 }: ModalProps) {
-
-    const [showSuccessNotification, setShowSuccessNotification] = useState(false);
     // return nothing, i.e.: modal will not open if isOpen is false
     if (!isOpen) { return null; }
 
@@ -34,15 +34,16 @@ export default function Modal({
                 <input placeholder="Role" style={inputStyle} />
                 <textarea placeholder="Notes" style={inputStyle} />
 
-                {showSuccessNotification && <SuccessNotification />}
+
 
                 <button onClick={() => {
-                    setShowSuccessNotification(true);
-                    setTimeout(() => {
-                        closeModal();
-                        setShowSuccessNotification(false);
+                    setShowSuccessNotification()
+                    closeModal()
 
-                    }, 1000)
+                    setTimeout(() => {
+                        closeSuccessNotification()
+                    }, 2000)
+
                 }}>Save</button>
                 <button onClick={closeModal}>Cancel</button>
 

@@ -1,11 +1,17 @@
 'use-client'
 import React from 'react'
+import Alert from '@mui/material/Alert';
 
-export default function SuccessNotification() {
+type SuccessNotificationProps = {
+    isShown: boolean
+}
+export default function SuccessNotification({
+    isShown
+}: SuccessNotificationProps) {
+    if (!isShown) { return null; }
+
     return (
-        <div>
-            Hi
-        </div>
+        <Alert severity="success">Application added successfully!</Alert>
 
     )
 }
