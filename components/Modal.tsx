@@ -2,6 +2,8 @@
 import React from "react";
 import SuccessNotification from "./SuccessNotification";
 import { useState } from "react";
+import { Button } from "@mui/material";
+
 type ModalProps = {
     isOpen: boolean
 
@@ -35,7 +37,7 @@ export default function Modal({
 
 
 
-                <button onClick={() => {
+                <Button variant="contained" color="success" onClick={() => {
                     setShowSuccessNotification(true)
                     closeModal()
 
@@ -43,8 +45,8 @@ export default function Modal({
                         setShowSuccessNotification(false)
                     }, 2000)
 
-                }}>Save</button>
-                <button onClick={closeModal}>Cancel</button>
+                }}>Save</Button>
+                <Button variant="contained" color="error" onClick={closeModal}>Cancel</Button>
 
             </div>
         </div>
