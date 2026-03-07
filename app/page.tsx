@@ -26,37 +26,37 @@ export default function Home() {
       <div className="flex h-100 w-full overflow-x-auto">
         <ApplicationCard
           company={"Google"}
+          location={"Barangaroo"}
           role={"SWE Intern"}
-          status={"Pending"}
-          date={"01/06"}
+          notes={"01/06"}
         />
 
         <ApplicationCard
           company={"Microsoft"}
+          location={"NSW"}
           role={"Graduate Offer"}
-          status={"Interview"}
-          date={"24/05"}
+          notes={"24/05"}
         />
 
         <ApplicationCard
           company={"TikTok"}
+          location={"CBD"}
           role={"Test Intern"}
-          status={"Rejected"}
-          date={"05/06"}
+          notes={"05/06"}
         />
 
         <ApplicationCard
-          company={"TikTok"}
-          role={"Test Intern"}
-          status={"Rejected"}
-          date={"05/06"}
+          company={"Canva"}
+          location={"CBD"}
+          role={"Software Engineering Intern"}
+          notes={"05/06"}
         />
 
         <ApplicationCard
-          company={"TikTok"}
-          role={"Test Intern"}
-          status={"Rejected"}
-          date={"05/06"}
+          company={"The Trade Desk"}
+          location={"Barangaroo Three Towers"}
+          role={"Software developer intern"}
+          notes={"05/06"}
         />
 
       </div>
