@@ -4,6 +4,7 @@ import SuccessNotification from "./SuccessNotification";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import './Modal.css';
+import { ApplicationDetails } from "@/types/ApplicationDetails";
 
 type ModalProps = {
     isOpen: boolean
@@ -14,18 +15,30 @@ type ModalProps = {
     // void (nothing)
     closeModal: () => void
     setShowSuccessNotification: (value: boolean) => void
+    applications: ApplicationDetails[]
+    setApplications: (value: ApplicationDetails[]) => void
 }
 
 
 export default function Modal({
-    isOpen, closeModal, setShowSuccessNotification
+    isOpen, closeModal, setShowSuccessNotification, applications, setApplications
 }: ModalProps) {
 
     function handleSubmit(formData: FormData) {
-        const companyName = formData.get("companyName");
-        const location = formData.get("location");
-        const role = formData.get("role");
-        const notes = formData.get("notes");
+        const companyName = formData.get("companyName") as string;
+        const location = formData.get("location") as string;
+        const role = formData.get("role") as string;
+        const notes = formData.get("notes") as string;
+
+        const app: ApplicationDetails = {
+            company: companyName,
+            location: location,
+            role: role,
+            notes: notes
+        }
+
+        applications = [app, ...applications]
+        setApplications(applications)
 
         setShowSuccessNotification(true)
         closeModal()

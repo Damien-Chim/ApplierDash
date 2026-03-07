@@ -1,14 +1,12 @@
 'use-client'
 import './ApplicationCard.css';
-import { Application } from '@/types/Application';
-// type - TypeScript keyword to define a custom type
-// The type is called ApplicationCardProps
+import { ApplicationDetails } from '@/types/ApplicationDetails';
 
 // the {company, ...} : ApplicationCardProps parameter is known as object destructuring
 // pulling out values directly fromt the props so that they can be used
 export default function ApplicationCard({
     company, location, role, notes
-}: Application) {
+}: ApplicationDetails) {
     return (
         <div className='card'>
             <h2>{company}</h2>
