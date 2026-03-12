@@ -1,7 +1,7 @@
 "use client";
 import ApplicationCard from "@/components/ApplicationCard";
 import Modal from "@/components/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import SuccessNotification from "@/components/SuccessNotification";
 import { ApplicationDetails } from "@/types/ApplicationDetails";
@@ -19,6 +19,76 @@ export default function Home() {
   // will contain an array of ApplicationDetails objects
   // setApplications is a function that will update the array of applications
   const [applications, setApplications] = useState<ApplicationDetails[]>([]);
+
+  useEffect(() => {
+    async function getApplications() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/applications");
+        if (!response.ok) throw new Error("Failed to fetch data");
+
+        const data = await response.json();
+        setApplications(data);
+      }
+
+      catch (error) {
+        console.log(error);
+      }
+    }
+    getApplications();
+  }, [])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // useEffect(() => {
+  //   async function loadApplications() {
+
+  //     try {
+
+  //       const res = await fetch("http://127.0.0.1:8000/applications");
+  //       if (!res.ok) throw new Error("Failed to fetch applications");
+
+  //       const data: ApplicationDetails[] = await res.json();
+  //       setApplications(data);
+  //     }
+
+  //     catch (err) {
+  //       console.error(err);
+  //     }
+  //   }
+
+  //   loadApplications()
+  // }, [])
 
   return (
     <div>

@@ -23,6 +23,31 @@ type ModalProps = {
 export default function Modal({
     isOpen, closeModal, setShowSuccessNotification, applications, setApplications
 }: ModalProps) {
+    async function sendToBackEnd(applications: ApplicationDetails[]) {
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/receive",
+                {
+                    method: "POST",
+                    // headers are key-value pairs that allow the client and the server to 
+                    // exchnage metadata about the data being transformed
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    // JSON.stringify converts a javascript object, array or value into JSON-formatted string
+                    body: JSON.stringify({ data: applications })
+                }
+            )
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+            const result = await response.json();
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+    }
 
     function handleSubmit(formData: FormData) {
         const companyName = formData.get("companyName") as string;
@@ -39,6 +64,9 @@ export default function Modal({
 
         applications = [app, ...applications]
         setApplications(applications)
+
+        // send to backend
+        sendToBackEnd(applications);
 
         setShowSuccessNotification(true)
         closeModal()
