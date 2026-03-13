@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-
+from database.database import fetch_database
 
 app = FastAPI()
 
@@ -28,10 +28,11 @@ async def read_root() -> dict:
 
 @app.get("/applications")
 def get_applications():
-    return [
-        {"company" : "Optiver", "location" : "Sydney", "role" : "SWE", "notes" : "Something something notes"}, 
-        {"company" : "Optiver", "location" : "Sydney", "role" : "SWE", "notes" : "Something something notes"}
-    ]
+    # fetch applications from database
+    try:
+        return fetch_database()
+    except Exception as e:
+        print("Error: " + e)
 
 class Application(BaseModel):
     company: str
