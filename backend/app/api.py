@@ -2,8 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from database.database import fetch_database
-
+from database.database import fetch_database, add_to_database
 app = FastAPI()
 
 # set urls to allow requests
@@ -40,11 +39,11 @@ class Application(BaseModel):
     role: str
     notes: str
 
-class ApplicationList(BaseModel):
-    data: List[Application]
+# class ApplicationList(BaseModel):
+#     data: List[Application]
 
 @app.post("/receive")
-async def receive_data(application: ApplicationList):
-    print(application)
-    return application
+async def receive_data(application: Application):
+    add_to_database(application)
+    
 

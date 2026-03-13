@@ -18,4 +18,29 @@ def fetch_database() -> dict:
         curs.close()
         conn.close()
 
-fetch_database()
+def add_to_database(application):
+    try:
+        conn = psycopg2.connect(database="postgres", user="postgres", password="Damienchim123", host="localhost", port=5432)
+        curs = conn.cursor(cursor_factory=RealDictCursor)
+        
+        application = dict(application)
+        insert_query = """
+            INSERT INTO Applications (company, location, role, notes)
+            VALUES (%s, %s, %s, %s);
+            """
+        curs.execute(
+            insert_query, (
+                application['company'], 
+                application['location'],
+                application['role'],
+                application['notes']
+            )
+        )
+        conn.commit()
+
+    except Exception as e:
+        print("Error" + e)
+
+    finally:
+        curs.close()
+        conn.close()

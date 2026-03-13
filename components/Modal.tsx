@@ -23,7 +23,7 @@ type ModalProps = {
 export default function Modal({
     isOpen, closeModal, setShowSuccessNotification, applications, setApplications
 }: ModalProps) {
-    async function sendToBackEnd(applications: ApplicationDetails[]) {
+    async function sendToBackEnd(application: ApplicationDetails) {
         try {
             const response = await fetch(
                 "http://127.0.0.1:8000/receive",
@@ -35,13 +35,12 @@ export default function Modal({
                         "Content-Type": "application/json"
                     },
                     // JSON.stringify converts a javascript object, array or value into JSON-formatted string
-                    body: JSON.stringify({ data: applications })
+                    body: JSON.stringify(application)
                 }
             )
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-            const result = await response.json();
         }
 
         catch (error) {
@@ -66,7 +65,7 @@ export default function Modal({
         setApplications(applications)
 
         // send to backend
-        sendToBackEnd(applications);
+        sendToBackEnd(app);
 
         setShowSuccessNotification(true)
         closeModal()
