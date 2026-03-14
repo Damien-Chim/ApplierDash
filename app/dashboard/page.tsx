@@ -1,68 +1,34 @@
 "use client";
 import ApplicationCard from "@/components/ApplicationCard";
-import Modal from "@/components/Modal";
+import AddApplicationModal from "@/components/AddApplicationModal";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import SuccessNotification from "@/components/SuccessNotification";
 import { ApplicationDetails } from "@/types/ApplicationDetails";
 import Navbar from "@/components/Navbar";
+import { getApplications } from "@/lib/api";
 
-export default function Home() {
-
-    // using useState hook to track the state of the modal card (shown/not shown)
-    // Initial value of showModal = false
-    // setShowModal is a function that will change value of showModal
-    const [showModal, setShowModal] = useState(false);
+export default function DashboardPage() {
+    const [showAddApplicationModal, setShowAddApplicationModal] = useState(false);
     const [showSuccessNotification, setShowSuccessNotification] = useState(false);
-
-    // <Application[]> is a typescript type annotation
-    // it tells the typescript that the state (applications) 
-    // will contain an array of ApplicationDetails objects
-    // setApplications is a function that will update the array of applications
     const [applications, setApplications] = useState<ApplicationDetails[]>([]);
 
     useEffect(() => {
-        async function getApplications() {
-            try {
-                const response = await fetch(
-                    "http://127.0.0.1:8000/applications",
-                    {
-                        method: "GET",
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    }
-                );
-                if (!response.ok) throw new Error("Failed to fetch data");
-
-                const data = await response.json();
-                setApplications(data.reverse());
-            }
-
-            catch (error) {
-                console.log(error);
-            }
+        async function loadApplications() {
+            const data = await getApplications();
+            setApplications(data.reverse());
         }
-        getApplications();
+        loadApplications()
     }, [])
 
     return (
         <div>
-            <Navbar></Navbar>
-            <Button variant="contained" onClick={() => setShowModal(true)}>+ Add Application</Button>
-            {
-                // create an add internship button, when it is pressed
-                // it will trigger the useState hook to set the show modal to true
-            }
-
-
-            {/* Recall that closeModal will take a function */}
-            {/* and that function should be something that sets setShowModal to false */}
-            <Modal
-                isOpen={showModal}
-                closeModal={() => setShowModal(false)}
+            <Navbar />
+            <Button variant="contained" onClick={() => setShowAddApplicationModal(true)}>+ Add Application</Button>
+            <AddApplicationModal
+                isOpen={showAddApplicationModal}
+                setShowAddApplicationModal={setShowAddApplicationModal}
                 setShowSuccessNotification={setShowSuccessNotification}
-                applications={applications}
                 setApplications={setApplications}
             />
 

@@ -1,86 +1,53 @@
-'use-client'
+'use client'
 import React from "react";
-import SuccessNotification from "./SuccessNotification";
-import { useState } from "react";
 import { Button } from "@mui/material";
 import './Modal.css';
 import { ApplicationDetails } from "@/types/ApplicationDetails";
+import { addApplication } from "@/lib/api";
+import { parseAddApplicationFormData } from "@/lib/utils";
 
-type ModalProps = {
+type AddApplicationModalProps = {
     isOpen: boolean
 
     // closeModal must be a function that takes in no parameter and returns nothing
     // () set of parameters that the function takes
     // => returns
     // void (nothing)
-    closeModal: () => void
+    setShowAddApplicationModal: React.Dispatch<React.SetStateAction<boolean>>
     setShowSuccessNotification: (value: boolean) => void
-    applications: ApplicationDetails[]
-    setApplications: (value: ApplicationDetails[]) => void
+    setApplications: React.Dispatch<React.SetStateAction<ApplicationDetails[]>>
 }
 
 
-export default function Modal({
-    isOpen, closeModal, setShowSuccessNotification, applications, setApplications
-}: ModalProps) {
-    async function sendToBackEnd(application: ApplicationDetails) {
-        try {
-            const response = await fetch(
-                "http://127.0.0.1:8000/receive",
-                {
-                    method: "POST",
-                    // headers are key-value pairs that allow the client and the server to 
-                    // exchnage metadata about the data being transformed
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    // JSON.stringify converts a javascript object, array or value into JSON-formatted string
-                    body: JSON.stringify(application)
-                }
-            )
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-        }
+export default function AddApplicationModal({
+    isOpen,
+    setShowAddApplicationModal,
+    setShowSuccessNotification,
+    setApplications
+}: AddApplicationModalProps) {
 
-        catch (error) {
-            console.log(error);
-        }
-    }
+    async function handleSubmit(formData: FormData) {
 
-    function handleSubmit(formData: FormData) {
-        const companyName = formData.get("companyName") as string;
-        const location = formData.get("location") as string;
-        const role = formData.get("role") as string;
-        const notes = formData.get("notes") as string;
-
-        const app: ApplicationDetails = {
-            company: companyName,
-            location: location,
-            role: role,
-            notes: notes
-        }
-
-        applications = [app, ...applications]
-        setApplications(applications)
+        const app: ApplicationDetails = parseAddApplicationFormData(formData);
+        setApplications((prev) => [app, ...prev]);
 
         // send to backend
-        sendToBackEnd(app);
-
+        await addApplication(app);
         setShowSuccessNotification(true)
-        closeModal()
+        setShowAddApplicationModal(false)
 
         setTimeout(() => {
             setShowSuccessNotification(false)
         }, 2000)
 
     }
+
     // return nothing, i.e.: modal will not open if isOpen is false
     if (!isOpen) { return null; }
 
     // otherwise: return this
     return (
-        <div style={overlayStyle} onClick={closeModal}>
+        <div style={overlayStyle} onClick={() => setShowAddApplicationModal(false)}>
             {/* and within this overlay background, is a modal card that will appear */}
             {/* {e.stopPropagation prevents the modal from closing when clicking inside} */}
             <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
@@ -96,7 +63,7 @@ export default function Modal({
                     <textarea className="w-full mb-3" name="notes" placeholder="Notes" style={inputStyle} />
 
                     <Button className="mui-button" type="submit" variant="contained" color="success">Save</Button>
-                    <Button className="mui-button" variant="contained" color="error" onClick={closeModal}>Cancel</Button>
+                    <Button className="mui-button" variant="contained" color="error" onClick={() => setShowAddApplicationModal(false)}>Cancel</Button>
                 </form>
             </div>
         </div>

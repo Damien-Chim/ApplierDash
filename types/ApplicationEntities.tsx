@@ -1,4 +1,4 @@
-
+'user client'
 // type - TypeScript keyword to define a custom type
 // The type is called ApplicationCardProps
 export type ApplicationDetails = {
