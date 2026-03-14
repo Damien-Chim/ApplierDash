@@ -4,14 +4,14 @@ import AddApplicationModal from "@/components/AddApplicationModal";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import SuccessNotification from "@/components/SuccessNotification";
-import { ApplicationDetails } from "@/types/ApplicationDetails";
+import { ApplicationInput, ApplicationObject } from "@/types/ApplicationEntities";
 import Navbar from "@/components/Navbar";
 import { getApplications } from "@/lib/api";
 
 export default function DashboardPage() {
     const [showAddApplicationModal, setShowAddApplicationModal] = useState(false);
     const [showSuccessNotification, setShowSuccessNotification] = useState(false);
-    const [applications, setApplications] = useState<ApplicationDetails[]>([]);
+    const [applications, setApplications] = useState<ApplicationObject[]>([]);
 
     useEffect(() => {
         async function loadApplications() {
@@ -34,13 +34,10 @@ export default function DashboardPage() {
 
             <SuccessNotification isShown={showSuccessNotification} />
             <div className="flex h-100 w-full overflow-x-auto">
-                {applications.map((app, index) => (
+                {applications.map((app) => (
                     <ApplicationCard
-                        key={index}
-                        company={app.company}
-                        location={app.location}
-                        role={app.role}
-                        notes={app.notes}
+                        key={app.application_id}
+                        app={app}
                     />
                 ))}
             </div>

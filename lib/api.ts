@@ -1,4 +1,4 @@
-import { ApplicationDetails } from "@/types/ApplicationEntities";
+import { ApplicationInput } from "@/types/ApplicationEntities";
 
 export async function getApplications() {
     try {
@@ -23,7 +23,7 @@ export async function getApplications() {
     }
 }
 
-export async function addApplication(application: ApplicationDetails) {
+export async function addApplication(application: ApplicationInput) {
     try {
         const response = await fetch(
             "http://127.0.0.1:8000/receive",
@@ -39,6 +39,8 @@ export async function addApplication(application: ApplicationDetails) {
         if (!response.ok) {
             throw new Error("Error posting data");
         }
+
+        return response.json()
     }
 
     catch (error) {

@@ -24,19 +24,25 @@ def add_to_database(application):
         curs = conn.cursor(cursor_factory=RealDictCursor)
         
         application = dict(application)
-        insert_query = """
+        query = """
             INSERT INTO Applications (company, location, role, notes)
             VALUES (%s, %s, %s, %s);
+
+            SELECT * FROM Applications ORDER BY timestamp DESC LIMIT 1
             """
+        
         curs.execute(
-            insert_query, (
+            query, (
                 application['company'], 
                 application['location'],
                 application['role'],
                 application['notes']
             )
         )
+        
+        new_application = curs.fetchone()
         conn.commit()
+        return new_application
 
     except Exception as e:
         print("Error" + e)

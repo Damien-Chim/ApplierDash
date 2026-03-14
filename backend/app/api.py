@@ -44,6 +44,6 @@ class Application(BaseModel):
 
 @app.post("/receive")
 async def receive_data(application: Application):
-    add_to_database(application)
+    return add_to_database(application)
     
 

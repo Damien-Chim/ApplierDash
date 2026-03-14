@@ -2,22 +2,16 @@
 import React from "react";
 import { Button } from "@mui/material";
 import './Modal.css';
-import { ApplicationDetails } from "@/types/ApplicationDetails";
+import { ApplicationInput, ApplicationObject } from "@/types/ApplicationEntities";
 import { addApplication } from "@/lib/api";
-import { parseAddApplicationFormData } from "@/lib/utils";
+import { getAppObj, parseAddApplicationFormData } from "@/lib/utils";
 
 type AddApplicationModalProps = {
     isOpen: boolean
-
-    // closeModal must be a function that takes in no parameter and returns nothing
-    // () set of parameters that the function takes
-    // => returns
-    // void (nothing)
     setShowAddApplicationModal: React.Dispatch<React.SetStateAction<boolean>>
     setShowSuccessNotification: (value: boolean) => void
-    setApplications: React.Dispatch<React.SetStateAction<ApplicationDetails[]>>
+    setApplications: React.Dispatch<React.SetStateAction<ApplicationObject[]>>
 }
-
 
 export default function AddApplicationModal({
     isOpen,
@@ -27,18 +21,23 @@ export default function AddApplicationModal({
 }: AddApplicationModalProps) {
 
     async function handleSubmit(formData: FormData) {
+        try {
+            const appInput: ApplicationInput = parseAddApplicationFormData(formData);
 
-        const app: ApplicationDetails = parseAddApplicationFormData(formData);
-        setApplications((prev) => [app, ...prev]);
+            // send to backend first
+            const appInfo = await addApplication(appInput);
+            const appObj = getAppObj(appInfo);
+            setApplications((prev) => [appObj, ...prev]);
+            setShowSuccessNotification(true)
+            setShowAddApplicationModal(false)
 
-        // send to backend
-        await addApplication(app);
-        setShowSuccessNotification(true)
-        setShowAddApplicationModal(false)
-
-        setTimeout(() => {
-            setShowSuccessNotification(false)
-        }, 2000)
+            setTimeout(() => {
+                setShowSuccessNotification(false)
+            }, 2000)
+        }
+        catch (error) {
+            console.log(error);
+        }
 
     }
 
