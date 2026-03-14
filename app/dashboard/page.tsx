@@ -21,6 +21,12 @@ export default function DashboardPage() {
         loadApplications()
     }, [])
 
+    function handleDelete(idToDelete: string) {
+        setApplications(prev => 
+            prev.filter(app => app.application_id !== idToDelete)
+        );
+    }
+
     return (
         <div>
             <Navbar />
@@ -38,6 +44,7 @@ export default function DashboardPage() {
                     <ApplicationCard
                         key={app.application_id}
                         app={app}
+                        handleDelete={handleDelete}
                     />
                 ))}
             </div>
