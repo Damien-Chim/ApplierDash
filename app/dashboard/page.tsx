@@ -77,41 +77,6 @@ export default function Home() {
                         notes={app.notes}
                     />
                 ))}
-                {/* <ApplicationCard
-          company={"Google"}
-          location={"Barangaroo"}
-          role={"SWE Intern"}
-          notes={"01/06"}
-        />
-
-        <ApplicationCard
-          company={"Microsoft"}
-          location={"NSW"}
-          role={"Graduate Offer"}
-          notes={"24/05"}
-        />
-
-        <ApplicationCard
-          company={"TikTok"}
-          location={"CBD"}
-          role={"Test Intern"}
-          notes={"05/06"}
-        />
-
-        <ApplicationCard
-          company={"Canva"}
-          location={"CBD"}
-          role={"Software Engineering Intern"}
-          notes={"05/06"}
-        />
-
-        <ApplicationCard
-          company={"The Trade Desk"}
-          location={"Barangaroo Three Towers"}
-          role={"Software developer intern"}
-          notes={"05/06"}
-        /> */}
-
             </div>
         </div>
     );
