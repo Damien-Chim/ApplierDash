@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
-from database.database import fetch_database, add_to_database
+from database.database import fetch_database, add_to_database, delete_entry
 app = FastAPI()
 
 # set urls to allow requests
@@ -47,3 +47,9 @@ async def receive_data(application: Application):
     return add_to_database(application)
     
 
+class DeleteKey(BaseModel):
+    application_id: str
+
+@app.post("/delete")
+async def delete_by_id(delete_key: DeleteKey):
+    return delete_entry(delete_key)

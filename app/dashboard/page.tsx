@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import SuccessNotification from "@/components/SuccessNotification";
 import { ApplicationInput, ApplicationObject } from "@/types/ApplicationEntities";
 import Navbar from "@/components/Navbar";
-import { getApplications } from "@/lib/api";
+import { deleteApplication, getApplications } from "@/lib/api";
 
 export default function DashboardPage() {
     const [showAddApplicationModal, setShowAddApplicationModal] = useState(false);
@@ -21,10 +21,9 @@ export default function DashboardPage() {
         loadApplications()
     }, [])
 
-    function handleDelete(idToDelete: string) {
-        setApplications(prev => 
-            prev.filter(app => app.application_id !== idToDelete)
-        );
+    async function handleDelete(applicationId: string) {
+        const data = await deleteApplication(applicationId);
+        setApplications(data.reverse());
     }
 
     return (

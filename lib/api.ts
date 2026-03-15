@@ -47,3 +47,26 @@ export async function addApplication(application: ApplicationInput) {
         console.log(error);
     }
 }
+
+export async function deleteApplication(applicationId: string) {
+    try {
+        const response = await fetch(
+            "http://127.0.0.1:8000/delete",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"application_id": applicationId})
+            }
+        );
+        if (!response.ok) {
+            throw new Error("Error deleting data");
+        } 
+        return response.json();
+    }
+
+    catch (error) {
+        console.log(error);
+    }
+}

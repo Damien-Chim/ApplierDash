@@ -50,3 +50,27 @@ def add_to_database(application):
     finally:
         curs.close()
         conn.close()
+
+def delete_entry(delete_key):
+    try:
+        conn = psycopg2.connect(database="postgres", user="postgres", password="Damienchim123", host="localhost", port=5432)
+        curs = conn.cursor(cursor_factory=RealDictCursor)
+        
+        application_dict = dict(delete_key)
+        query = """
+            DELETE FROM Applications WHERE application_id = %s;
+
+            SELECT * FROM Applications;
+            """
+        
+        curs.execute(query, [application_dict['application_id']])
+        result = curs.fetchall()
+        conn.commit()
+        return result
+    
+    except Exception as e:
+        print("Error" + e)
+
+    finally:
+        curs.close()
+        conn.close()
